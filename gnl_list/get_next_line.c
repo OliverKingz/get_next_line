@@ -6,7 +6,7 @@
 /*   By: ozamora- <ozamora-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/02 17:28:58 by ozamora-          #+#    #+#             */
-/*   Updated: 2025/01/07 18:06:00 by ozamora-         ###   ########.fr       */
+/*   Updated: 2025/02/10 22:59:33 by ozamora-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,9 @@ static void	process_line(int i_nl, t_list **line, char **line_str)
 
 	if (i_nl < 0)
 	{
-		(ft_lst_tostr(line, line_str, i_nl), ft_lstclear(line, free), *line = NULL);
+		ft_lst_tostr(line, line_str, i_nl);
+		ft_lstclear(line, free);
+		*line = NULL;
 	}
 	else
 	{

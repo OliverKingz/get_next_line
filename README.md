@@ -128,6 +128,46 @@ int main(void)
     return 0;  
 }  
 ```  
+
+### Error Handling and Testing
+
+To test `get_next_line`, you need to create a `main.c` file that calls the function and then compile and run it. Below are the test cases you should evaluate to ensure the function works correctly and handles all edge cases.
+
+#### Basic Functionality
+| **Test Case**                                          | **Description**                                                                 | **Expected Output**                                                                 |
+|--------------------------------------------------------|---------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|
+| **Valid File Descriptor**                              | Reads from a valid file descriptor.                                             | Returns each line from the file, including the newline character.                   |
+| **Standard Input (stdin)**                             | Reads from standard input (`stdin`).                                            | Returns each line entered by the user, including the newline character.             |
+
+#### Edge Cases
+| **Test Case**                                          | **Description**                                                                 | **Expected Output**                                                                 |
+|--------------------------------------------------------|---------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|
+| **Invalid File Descriptor**                            | Attempts to read from an invalid file descriptor (e.g., `-1`).                  | Returns `NULL` and handles the error.                                              |
+| **File Without Permissions**                           | Attempts to read from a file without proper permissions.                        | Returns `NULL` and handles the error.                                              |
+| **Empty File**                                         | Reads from an empty file.                                                       | Returns `NULL` after the first call.                                               |
+| **File Without Newline at End**                        | Reads from a file that doesn’t end with a newline.                              | Returns the last line without a newline character.                                 |
+| **File With One Line**                                 | Reads from a file with only one line.                                           | Returns the line, including the newline character.                                 |
+| **File With Multiple Lines**                           | Reads from a file with multiple lines.                                          | Returns each line sequentially, including the newline character.                   |
+
+#### Buffer Size Variations
+| **Test Case**                                          | **Description**                                                                 | **Expected Output**                                                                 |
+|--------------------------------------------------------|---------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|
+| **BUFFER_SIZE=1**                                      | Reads with a buffer size of 1.                                                  | Returns each line correctly, even with a very small buffer size.                   |
+| **BUFFER_SIZE=1000000**                                | Reads with a very large buffer size.                                            | Returns each line correctly, even with a large buffer size.                        |
+| **BUFFER_SIZE=42**                                     | Reads with a moderate buffer size.                                              | Returns each line correctly.                                                       |
+
+#### Memory Management
+| **Test Case**                                          | **Description**                                                                 | **Expected Output**                                                                 |
+|--------------------------------------------------------|---------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|
+| **Check for Memory Leaks**                             | Checks for memory leaks using tools like `valgrind`.                            | No memory leaks should be detected.                                                |
+| **Check for Memory Leaks on Error**                    | Checks for memory leaks when handling errors (e.g., invalid file descriptor).    | No memory leaks should be detected.                                                |
+
+#### Bonus Functionality (Multiple File Descriptors)
+| **Test Case**                                          | **Description**                                                                 | **Expected Output**                                                                 |
+|--------------------------------------------------------|---------------------------------------------------------------------------------|-------------------------------------------------------------------------------------|
+| **Multiple File Descriptors**                          | Alternates reading between multiple file descriptors.                           | Returns lines from each file descriptor in sequence without mixing contexts.        |
+| **Check for Memory Leaks with Multiple FDs**           | Checks for memory leaks when handling multiple file descriptors.                | No memory leaks should be detected.                                                |
+
 ---
 
 ## What I Learned  
@@ -152,3 +192,7 @@ This project is part of the **42 Cursus**, a rigorous programming curriculum tha
 Also, thanks to my peers and mentors for their feedback and support during the development process.  
 
 ---
+You're absolutely correct! Since `get_next_line` is a function and not a standalone executable, you can't directly run it from the command line like `./get_next_line`. Instead, you need to create a test program (e.g., `main.c`) that calls `get_next_line` and then compile and run that program. Below, I’ve updated the **Error Handling and Testing** section to reflect this, focusing on how to test `get_next_line` in a controlled environment.
+
+---
+

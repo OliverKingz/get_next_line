@@ -6,7 +6,7 @@
 /*   By: ozamora- <ozamora-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 16:27:13 by ozamora-          #+#    #+#             */
-/*   Updated: 2025/02/10 23:09:58 by ozamora-         ###   ########.fr       */
+/*   Updated: 2025/04/15 02:13:56 by ozamora-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 /*
  * Get Next Line Functions:
  * - get_next_line: Reads a line from the file descriptor.
- * - read_and_store: Reads from the fd with a buffer and stores the data.
- * - get_line: gets the line from the buffer stored lines
+ * - read_and_append: Reads from the fd with a buffer and stores the data.
+ * - extract_line_store_remaining: gets the line from the buffer stored lines
  * Functions that GNL uses from Libft:
  * - `ft_strdup`
  * - `ft_strchr`

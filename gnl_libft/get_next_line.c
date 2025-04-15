@@ -6,7 +6,7 @@
 /*   By: ozamora- <ozamora-@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/28 16:14:30 by ozamora-          #+#    #+#             */
-/*   Updated: 2025/02/10 23:29:47 by ozamora-         ###   ########.fr       */
+/*   Updated: 2025/04/15 02:18:41 by ozamora-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 	return (src_len);
 }
 
-static char	*read_and_store(int fd, char *store, char *buffer)
+static char	*read_and_append(int fd, char *store, char *buffer)
 {
 	char	*temp;
 	ssize_t	bytes_read;
@@ -94,7 +94,7 @@ static char	*read_and_store(int fd, char *store, char *buffer)
  * 
  * - The caller is responsible for freeing the returned string.
  */
-static char	*get_line(char *line_buffer)
+static char	*extract_line_store_remaining(char *line_buffer)
 {
 	char	*line;
 	ssize_t	i;
@@ -138,14 +138,11 @@ char	*get_next_line(int fd)
 	buffer = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!buffer)
 		return (free(store[fd]), store[fd] = NULL, NULL);
-	line = read_and_store(fd, store[fd], buffer);
+	line = read_and_append(fd, store[fd], buffer);
 	(free(buffer), buffer = NULL);
 	if (!line)
 		return (free(store[fd]), store[fd] = NULL, NULL);
-	store[fd] = get_line(line);
-	if (!store[fd])
-		return (free(line), line = NULL, NULL);
-	line = ft_strdup(store[fd]);
+	store[fd] = extract_line_store_remaining(line);
 	return (line);
 }
 
@@ -153,30 +150,30 @@ char	*get_next_line(int fd)
 /* ************************* UNCOMMENT FOR TESTING  ************************* */
 /* ************************************************************************** */
 
-// int	main(void)
-// {
-// 	int		fd1;
-// 	int		fd2;
-// 	int		fd3;
-// 	char	*line1;
-// 	char	*line2;
-// 	char	*line3;
+int	main(void)
+{
+	int		fd1;
+	int		fd2;
+	int		fd3;
+	char	*line1;
+	char	*line2;
+	char	*line3;
 
-// 	fd1 = open("file0", O_RDONLY);
-// 	fd2 = open("file1", O_RDONLY);
-// 	fd3 = open("alphabet", O_RDONLY);
-// 	if (fd1 == -1 || fd2 == -1 || fd3 == -1)
-// 		return (printf("error"), 1);
-// 	while (1)
-// 	{
-// 		line1 = get_next_line(fd1);
-// 		line2 = get_next_line(fd2);
-// 		line3 = get_next_line(fd3);
-// 		(printf("%s", line1), printf("%s", line2), printf("%s", line3));
-// 		if (line3 == NULL)
-// 			break ;
-// 		(free(line1), free(line2), free(line3));
-// 	}
-// 	(close(fd1), close(fd2), close(fd3));
-// 	return (0);
-// }
+	fd1 = open("file0", O_RDONLY);
+	fd2 = open("file1", O_RDONLY);
+	fd3 = open("alphabet", O_RDONLY);
+	if (fd1 == -1 || fd2 == -1 || fd3 == -1)
+		return (printf("error"), 1);
+	while (1)
+	{
+		line1 = get_next_line(fd1);
+		line2 = get_next_line(fd2);
+		line3 = get_next_line(fd3);
+		(printf("%s", line1), printf("%s", line2), printf("%s", line3));
+		if (line3 == NULL)
+			break ;
+		(free(line1), free(line2), free(line3));
+	}
+	(close(fd1), close(fd2), close(fd3));
+	return (0);
+}
